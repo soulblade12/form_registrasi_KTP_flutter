@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:form_registrasi_ktp/data/model/user_data.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class CardUser extends StatelessWidget {
   final UserData userData;
@@ -40,8 +41,6 @@ class CardUser extends StatelessWidget {
                     IconButton(
                       icon: Icon(Icons.delete),
                       onPressed: () {
-                        // Implement delete functionality
-                        // For example, show a confirmation dialog and delete if confirmed
                         showDeleteConfirmationDialog(context);
                       },
                     ),
@@ -71,9 +70,8 @@ class CardUser extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                // Implement delete logic here
-                // Navigator.pop(context); // Optional: Pop the dialog
-                Navigator.pop(context, true); // Return a value if needed
+                deleteUserData(userData);
+                Navigator.pop(context, true);
               },
               child: Text('Delete'),
             ),
@@ -81,5 +79,10 @@ class CardUser extends StatelessWidget {
         );
       },
     );
+  }
+
+  void deleteUserData(UserData userData) async {
+    final userBox = await Hive.openBox<UserData>('userDataBox');
+    userBox.delete(userData.key);
   }
 }

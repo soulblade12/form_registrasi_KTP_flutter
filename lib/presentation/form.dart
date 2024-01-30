@@ -216,6 +216,16 @@ class _MyFormState extends State<MyForm> {
                 },
                 child: Text('Submit'),
               ),
+              ElevatedButton(
+                onPressed: () async {
+                  // if (_formkey.currentState!.validate()) {
+                  //   // Form is valid, perform form submission logic here
+                  //   print("Form submitted");
+                  context.go('/detail');
+                  // }
+                },
+                child: Text('detail'),
+              ),
             ],
           ),
         ),
